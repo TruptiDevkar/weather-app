@@ -6,12 +6,19 @@ import TempandDetails from "./components/TempandDetails";
 import Forecast from "./components/Forecast";
 import getFormattedWeatherData from "./services/WeatherService";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   const [query, setQuery] = useState({ q: "ahmedabad" });
   const [units, setUnits] = useState("metric");
   const [weather, setWeather] = useState(null);
 
   const getWeather = async () => {
+  const message = query.q ? query.q : 'current location';
+  toast.info(`fetching weather data for ${message.toUpperCase()}`);
+
+
     try {
       const data = await getFormattedWeatherData({ ...query, units });
       setWeather(data);
@@ -39,11 +46,15 @@ function App() {
       {weather && (
         <>
           <Timeandlocation weather={weather} />
-          <TempandDetails weather={weather} />
+          <TempandDetails weather={weather} units={units} />
           <Forecast title='3 hour step forecast' data={weather.hourly} />
           <Forecast title='daily forecast' data={weather.daily} />
         </>
       )}
+
+<ToastContainer autoClose={2500} hideProgressBar={true} theme='colored' />
+
+
     </div>
   );
 }

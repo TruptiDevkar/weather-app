@@ -6,7 +6,9 @@ import { MdKeyboardArrowUp,MdKeyboardArrowDown } from "react-icons/md"
 
 const TempandDetails = ({weather:{
   details,temp,temp_min,temp_max,sunrise,sunset,speed,humidity,feels_like,icon
-}}) => {
+},
+units,
+}) => {
   const VerticalDetails=[
     {
       id:1,
@@ -26,7 +28,7 @@ const TempandDetails = ({weather:{
       id:3,
       Icon:FiWind,
       title:'Wind',
-      value:`${speed.toFixed()}km/hr`
+      value:`${speed.toFixed()} ${units==='metric'?'km/hr':'m/s'}`
 
     },
   ];
